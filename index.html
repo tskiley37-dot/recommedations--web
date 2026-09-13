@@ -1,160 +1,649 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - WatchGuide</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie & TV Recommendations</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            color: white;
-            background:
-                radial-gradient(circle at top left, #302060, transparent 40%),
-                radial-gradient(circle at bottom right, #163b5c, transparent 40%),
-                #090912;
-            padding: 20px;
-        }
+body{
+  font-family:Arial,sans-serif;
+  color:#fff;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#29204d 0,#0d0b18 45%,#07070c 100%);
+}
 
-        .login-box {
-            width: 100%;
-            max-width: 420px;
-            padding: 35px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-        }
+header{
+  padding:28px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 8px;
-        }
+.logo{
+  font-size:26px;
+  font-weight:800;
+}
 
-        .subtitle {
-            text-align: center;
-            color: #9999a8;
-            margin-bottom: 30px;
-        }
+#backBtn{
+  display:none;
+  padding:10px 18px;
+  border:1px solid #ffffff30;
+  border-radius:14px;
+  background:#ffffff12;
+  color:white;
+  cursor:pointer;
+}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #c9c9d5;
-            font-size: 14px;
-        }
+main{
+  padding:20px 6% 60px;
+}
 
-        input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 18px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.12);
-            outline: none;
-            background: rgba(255,255,255,0.06);
-            color: white;
-            font-size: 15px;
-        }
+.hero{
+  text-align:center;
+  margin:35px auto 45px;
+  max-width:800px;
+}
 
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: #8d6cff;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.hero h1{
+  font-size:48px;
+  margin-bottom:12px;
+}
 
-        button:hover {
-            opacity: 0.9;
-        }
+.hero p{
+  color:#bdb9ca;
+  font-size:17px;
+}
 
-        #message {
-            text-align: center;
-            margin-top: 18px;
-            color: #ff8d8d;
-            min-height: 20px;
-        }
+.category-grid,
+.sub-grid,
+.media-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:22px;
+}
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 22px;
-            color: #aaaabd;
-            text-decoration: none;
-            font-size: 14px;
-        }
-    </style>
+.glass{
+  background:#ffffff0d;
+  border:1px solid #ffffff18;
+  border-radius:24px;
+  backdrop-filter:blur(18px);
+  box-shadow:0 15px 45px #0005;
+}
+
+.category,
+.sub{
+  padding:45px 25px;
+  text-align:center;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.category:hover,
+.sub:hover{
+  transform:translateY(-6px);
+  background:#ffffff16;
+}
+
+.category h2,
+.sub h3{
+  font-size:24px;
+}
+
+.category p{
+  margin-top:10px;
+  color:#aaa5b8;
+}
+
+.media-card{
+  overflow:hidden;
+}
+
+.media-card img{
+  width:100%;
+  height:310px;
+  object-fit:cover;
+  display:block;
+  background:#17151f;
+}
+
+.info{
+  padding:16px;
+}
+
+.info h3{
+  font-size:19px;
+  margin-bottom:7px;
+}
+
+.meta{
+  color:#aaa5b8;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.genre{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:10px;
+  background:#ffffff12;
+  color:#ddd;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.desc{
+  color:#bdb9ca;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.rec{
+  margin-top:10px;
+  color:#ddd;
+  font-size:13px;
+}
+
+#title{
+  margin-bottom:25px;
+}
+
+.empty{
+  text-align:center;
+  color:#aaa5b8;
+  padding:50px;
+}
+
+@media(max-width:600px){
+  .hero h1{
+    font-size:34px;
+  }
+
+  main{
+    padding:10px 5% 40px;
+  }
+
+  .media-card img{
+    height:280px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="login-box">
+<header>
+  <div class="logo">MOVIE HUB</div>
 
-    <h1>Admin Login</h1>
+  <button id="backBtn" onclick="goBack()">
+    ← Back
+  </button>
+</header>
 
-    <p class="subtitle">
-        Sign in to manage recommendations
-    </p>
+<main>
 
-    <form id="loginForm">
+<section class="hero" id="homeHero">
+  <h1>Discover Your Next Watch</h1>
+  <p>Movies and TV series recommended for you.</p>
+</section>
 
-        <label>Email</label>
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            required
-        >
+<h2 id="title"></h2>
 
-        <label>Password</label>
-        <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            required
-        >
+<div id="content"></div>
 
-        <button type="submit">
-            Login
-        </button>
-
-    </form>
-
-    <div id="message"></div>
-
-    <a href="index.html" class="back">
-        ← Back to website
-    </a>
-
-</div>
+</main>
 
 <script>
-    /*
-       Supabase connection will be added next.
-       Do not change anything here yet.
-    */
 
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-        e.preventDefault();
+/* =========================
+   SUPABASE
+========================= */
 
-        document.getElementById("message").textContent =
-            "Supabase login will be connected next.";
+const SUPABASE_URL =
+"https://lguebsugoqbmobvnsfnj.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_7gVup72kNQwHWnYXxO0WGA_GEqR-fe3";
+
+const headers = {
+  "apikey": SUPABASE_KEY,
+  "Authorization": "Bearer " + SUPABASE_KEY
+};
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const content =
+document.getElementById("content");
+
+const title =
+document.getElementById("title");
+
+const backBtn =
+document.getElementById("backBtn");
+
+const homeHero =
+document.getElementById("homeHero");
+
+
+let pageStack = [];
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/[&<>"']/g, function(c){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[c];
+
     });
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function showHome(){
+
+  pageStack = [];
+
+  title.textContent = "";
+
+  backBtn.style.display = "none";
+
+  homeHero.style.display = "block";
+
+
+  content.innerHTML = `
+
+    <div class="category-grid">
+
+      <div
+        class="glass category"
+        onclick="showSub('MOVIES')">
+
+        <h2>🎬 MOVIES</h2>
+
+        <p>
+          English Movies & K Movies
+        </p>
+
+      </div>
+
+
+      <div
+        class="glass category"
+        onclick="showSub('TV SERIES')">
+
+        <h2>📺 TV SERIES</h2>
+
+        <p>
+          English TV Series & K Drama
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* =========================
+   SUB CATEGORIES
+========================= */
+
+function showSub(type){
+
+  pageStack.push(showHome);
+
+  backBtn.style.display = "block";
+
+  homeHero.style.display = "none";
+
+  title.textContent = type;
+
+
+  if(type === "MOVIES"){
+
+    content.innerHTML = `
+
+      <div class="sub-grid">
+
+        <div
+          class="glass sub"
+          onclick="loadMedia('English Movies')">
+
+          <h3>English Movies</h3>
+
+        </div>
+
+
+        <div
+          class="glass sub"
+          onclick="loadMedia('K Movies')">
+
+          <h3>K Movies</h3>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+  else{
+
+    content.innerHTML = `
+
+      <div class="sub-grid">
+
+        <div
+          class="glass sub"
+          onclick="loadMedia('English TV Series')">
+
+          <h3>English TV Series</h3>
+
+        </div>
+
+
+        <div
+          class="glass sub"
+          onclick="loadMedia('K Drama')">
+
+          <h3>K Drama</h3>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   LOAD MEDIA FROM SUPABASE
+========================= */
+
+async function loadMedia(categoryName){
+
+  pageStack.push(function(){
+
+    showSub(
+      categoryName.includes("Movies")
+      ? "MOVIES"
+      : "TV SERIES"
+    );
+
+  });
+
+
+  homeHero.style.display = "none";
+
+  backBtn.style.display = "block";
+
+  title.textContent = categoryName;
+
+  content.innerHTML =
+    '<div class="empty">Loading...</div>';
+
+
+  try{
+
+    /* GET CATEGORY */
+
+    const catUrl =
+      SUPABASE_URL +
+      "/rest/v1/categories?name=eq." +
+      encodeURIComponent(categoryName) +
+      "&select=id,name";
+
+
+    const catRes =
+      await fetch(catUrl,{
+        headers:headers
+      });
+
+
+    if(!catRes.ok){
+
+      throw new Error(
+        "Categories request failed"
+      );
+
+    }
+
+
+    const categories =
+      await catRes.json();
+
+
+    if(!categories.length){
+
+      content.innerHTML = `
+        <div class="empty">
+          Category not found in Supabase.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    const categoryId =
+      categories[0].id;
+
+
+    /* GET MOVIES / SERIES */
+
+    const mediaUrl =
+      SUPABASE_URL +
+      "/rest/v1/media?category_id=eq." +
+      encodeURIComponent(categoryId) +
+      "&select=id,title,format,poster_url,genre,description,recommendation,year,created_at" +
+      "&order=created_at.desc";
+
+
+    const mediaRes =
+      await fetch(mediaUrl,{
+        headers:headers
+      });
+
+
+    if(!mediaRes.ok){
+
+      throw new Error(
+        "Media request failed"
+      );
+
+    }
+
+
+    const media =
+      await mediaRes.json();
+
+
+    if(!media.length){
+
+      content.innerHTML = `
+        <div class="empty">
+          No movies or series added yet.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    /* DISPLAY CARDS */
+
+    content.innerHTML = `
+
+      <div class="media-grid">
+
+        ${media.map(item => `
+
+          <article class="glass media-card">
+
+            <img
+              src="${escapeHtml(item.poster_url || '')}"
+              alt="${escapeHtml(item.title)}"
+              onerror="this.style.display='none'"
+            >
+
+            <div class="info">
+
+              <h3>
+                ${escapeHtml(item.title)}
+              </h3>
+
+
+              <div class="meta">
+
+                ${
+                  item.year
+                  ? escapeHtml(item.year)
+                  : ""
+                }
+
+                ${
+                  item.format
+                  ? " • " +
+                    escapeHtml(item.format)
+                  : ""
+                }
+
+              </div>
+
+
+              ${
+                item.genre
+                ? `
+                  <span class="genre">
+                    ${escapeHtml(item.genre)}
+                  </span>
+                `
+                : ""
+              }
+
+
+              ${
+                item.description
+                ? `
+                  <p class="desc">
+                    ${escapeHtml(item.description)}
+                  </p>
+                `
+                : ""
+              }
+
+
+              ${
+                item.recommendation
+                ? `
+                  <p class="rec">
+                    ⭐ ${escapeHtml(
+                      item.recommendation
+                    )}
+                  </p>
+                `
+                : ""
+              }
+
+            </div>
+
+          </article>
+
+        `).join("")}
+
+      </div>
+
+    `;
+
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    content.innerHTML = `
+
+      <div class="empty">
+
+        Could not connect to Supabase.
+
+        <br><br>
+
+        Check your Supabase URL,
+        key and public SELECT policies.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+function goBack(){
+
+  const previous =
+    pageStack.pop();
+
+
+  if(previous){
+
+    previous();
+
+  }
+
+  else{
+
+    showHome();
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+showHome();
+
 </script>
 
 </body>
